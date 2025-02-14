@@ -9,12 +9,47 @@
 
 #include <iostream>
 using namespace std;
+double CalculateTax(double stateTax, double countyTax, double initPurchase);
+double EnterCountyTax();
+double EnterStateTax();
+double EnterInitPurchase();
+
 
 int main()
 {
-    double purchase = 95;
-    cout << "Your purchase of $95 comes with a tax of: $" << (.04 * purchase) + (.02 * purchase); 
-    //this calculates taxes but very ineffectively. I'd ideally like to have ((TAX / 100) * PURCHASE) but since the raw numbers aren't floats, C++ truncates them to 0.
-    //this issue is easily solved with a modular design that permits user input (since you can change the values to doubles). 
+    double purchase = EnterInitPurchase();
+    double stateTax = EnterStateTax();
+    double countyTax = EnterCountyTax();
+    double taxTotal = CalculateTax(stateTax, countyTax, purchase);
+    cout << "Your purchase of $"<< purchase << " comes with a tax of : $" << taxTotal; 
 }
 
+double CalculateTax(double stateTax, double countyTax, double initPurchase)
+{
+    double taxTotal = ((stateTax / 100) * initPurchase) + ((countyTax / 100) * initPurchase);
+    return taxTotal;
+}
+
+double EnterCountyTax()
+{
+    double counTax; 
+    cout << "What is the county tax? ";
+    cin >> counTax;
+    return counTax;
+}
+
+double EnterStateTax()
+{
+    double staTax;
+    cout << "What is the state tax? ";
+    cin >> staTax;
+    return staTax;
+}
+
+double EnterInitPurchase()
+{
+    double initPurch;
+    cout << "How much was your purchase? ";
+    cin >> initPurch;
+    return initPurch;
+}
